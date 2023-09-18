@@ -16,6 +16,7 @@ public class IMCCalculadora {
     }
 }
 
+// Contém campos de texto para inserção do peso e altura, e um campo de texto para exibir o resultado do cálculo do IMC.
 class IMCCalculadoraFrame extends JFrame {
     private JTextField pesoField;
     private JTextField alturaField;
@@ -71,11 +72,12 @@ class IMCCalculadoraFrame extends JFrame {
 
     private class CalcularListener implements ActionListener {
         @Override
+         //No método actionPerformed, extrai os valores de peso e altura, calcula o IMC e determina a categoria de acordo com o valor do IMC.
         public void actionPerformed(ActionEvent e) {
+             //Calcula o IMC e lida com casos onde a altura é zero.
             try {
                 double peso = Double.parseDouble(pesoField.getText());
                 double altura = Double.parseDouble(alturaField.getText());
-
                 double imc = calcularIMC(peso, altura);
                 String categoria = getIMCCategoria(imc);
 
@@ -94,6 +96,8 @@ class IMCCalculadoraFrame extends JFrame {
             return peso / (altura * altura);
         }
 
+
+        // Determina a categoria com base no IMC calculado
         private String getIMCCategoria(double imc) {
             if (imc < 16.0) {
                 return "Severamente abaixo do peso";

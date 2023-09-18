@@ -34,7 +34,7 @@ class CalculatorFrame extends JFrame {
         kmField.setEditable(false);
 
             JButton ConverterBotao = new JButton("Converter");
-        ConverterBotao.addActionListener(new ConvertButtonListener());
+        ConverterBotao.addActionListener(new botaoConverter());
         ConverterBotao.setBackground(Color.WHITE);
         ConverterBotao.setForeground(Color.black);
 
@@ -64,7 +64,7 @@ class CalculatorFrame extends JFrame {
         pack();
     }
 
-    private class ConvertButtonListener implements ActionListener {
+    private class botaoConverter implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
