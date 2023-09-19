@@ -5,14 +5,12 @@ import java.awt.event.ActionListener;
 
 public class IMCCalculadora {
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
             JFrame frame = new IMCCalculadoraFrame();
             frame.setTitle("Calculadora IMC");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setVisible(true);
             frame.setSize(400, 170);
             frame.setResizable(false);
-        });
     }
 }
 
@@ -25,16 +23,16 @@ class IMCCalculadoraFrame extends JFrame {
     public IMCCalculadoraFrame() {
         setLayout(new BorderLayout());
         //Criando e Configurando a posições dos botões
-        JPanel inputPanel = createInputPanel();
+        JPanel inputPanel = criarInput();
         add(inputPanel, BorderLayout.CENTER);
 
-        JPanel buttonPanel = createButtonPanel();
+        JPanel buttonPanel = criarBotao();
         add(buttonPanel, BorderLayout.SOUTH);
         
         pack();
     }
 
-    private JPanel createInputPanel() {
+    private JPanel criarInput() {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(3, 2, 10, 10));
 
@@ -58,42 +56,70 @@ class IMCCalculadoraFrame extends JFrame {
         return panel;
     }
 
-    private JPanel createButtonPanel() {
-        JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout());
+private JPanel criarBotao() {
+    JPanel panel = new JPanel();
 
-        JButton calcularButton = new JButton("Calcular");
-        calcularButton.addActionListener(new CalcularListener());
+    // Define o layout do painel para FlowLayout
+    panel.setLayout(new FlowLayout());
 
-        panel.add(calcularButton);
+    // Cria um botão (JButton) 
+    JButton calcularButton = new JButton("Calcular");
 
-        return panel;
-    }
+   
+    // será notificado quando o botão for clicado. 
+    calcularButton.addActionListener(new CalcularListener());
+
+    // Adiciona o botão  ao painel.
+    panel.add(calcularButton);
+
+    // Retorna o painel 
+    return panel;
+}
 
     private class CalcularListener implements ActionListener {
-        @Override
-         //No método actionPerformed, extrai os valores de peso e altura, calcula o IMC e determina a categoria de acordo com o valor do IMC.
-        public void actionPerformed(ActionEvent e) {
-             //Calcula o IMC e lida com casos onde a altura é zero.
-            try {
-                double peso = Double.parseDouble(pesoField.getText());
-                double altura = Double.parseDouble(alturaField.getText());
-                double imc = calcularIMC(peso, altura);
-                String categoria = getIMCCategoria(imc);
+    // Esta classe interna implementa a interface ActionListener, o que significa que ela lida com eventos de ação, como cliques em botões.
 
-                resultField.setText(String.format("IMC: %.2f (%s)", imc, categoria));
-            } catch (NumberFormatException ex) {
-                resultField.setText("Valor inválido");
-            } catch (ArithmeticException ex) {
-                resultField.setText("Altura não pode ser zero");
-            }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // O método actionPerformed é chamado quando ocorre um evento de ação, neste caso, quando o botão de cálculo de IMC é clicado.
+
+        try {
+            // Tenta realizar o cálculo do IMC com base nos valores de peso e altura inseridos.
+
+            double peso = Double.parseDouble(pesoField.getText());
+            // Obtém o valor de peso do campo de texto pesoField e converte para um valor double.
+
+            double altura = Double.parseDouble(alturaField.getText());
+            // Obtém o valor de altura do campo de texto alturaField e converte para um valor double.
+
+            double imc = calcularIMC(peso, altura);
+            // Calcula o IMC com base nos valores de peso e altura usando uma função calcularIMC, logo abaixo.
+
+            String categoria = getIMCCategoria(imc);
+            // Obtém a categoria do IMC com base no valor do IMC usando uma função getIMCCategoria.
+
+            resultField.setText(String.format("IMC: %.2f (%s)", imc, categoria));
+            // Define o formato correto do valor, 2 casas após a virgula
+
+        } catch (NumberFormatException ex) {
+            // significa que os valores inseridos não puderam ser convertidos em números válidos.
+
+            resultField.setText("Valor inválido");
+
+        } catch (ArithmeticException ex) {
+            // significa que houve uma tentativa de divisão por zero (altura igual a zero).
+
+            resultField.setText("Altura não pode ser zero");
+
         }
+    }
+}
 
         private double calcularIMC(double peso, double altura) {
             if (altura == 0) {
                 throw new ArithmeticException("Altura não pode ser zero");
             }
-            return peso / (altura * altura);
+            return peso / (altura * altura); //CALCULO DO IMC
         }
 
 
@@ -116,4 +142,4 @@ class IMCCalculadoraFrame extends JFrame {
             }
         }
     }
-}
+

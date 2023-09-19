@@ -6,14 +6,14 @@ import java.awt.event.ActionListener;
 public class Calculadora {
     public static void main(String[] args) {
         //Setando o Frame/Janela
-        SwingUtilities.invokeLater(() -> {
+
             JFrame frame = new CalculadoraFrame();
             frame.setTitle("Calculadora");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(180, 260);
             frame.setResizable(false);
             frame.setVisible(true);
-        });
+        
     }
 }
 
